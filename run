@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+P=`dirname $0`
+
+# Generate a random token
+echo "Generating token..."
+cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1 > ${P}/token
+
+# Start the server
+echo "Starting code signing server..."
+python lib/server.py --host=0.0.0.0 --port=4533 --storage=${P}/programs
